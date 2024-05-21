@@ -281,11 +281,13 @@ function spellWord(word) {
             letterUtterance.voice = voices[selectedVoiceIndex];
         }
         letterUtterance.rate = 1.2;
+        if (index === letters.length - 1) {
+            letterUtterance.onend = () => {
+                speakAgain(word);
+            };
+        }
         speechSynthesis.speak(letterUtterance);
     });
-    letterUtterance.onend = () => {
-            speakAgain(word);
-        };
 }
 
 function speakAgain(word) {
