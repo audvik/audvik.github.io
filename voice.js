@@ -230,7 +230,7 @@ function populateVoiceList() {
     }
     
     const voices = speechSynthesis.getVoices();
-    hiINVoice = voices.find(voice => voice.lang === 'hi_IN');
+    hiINVoice = voices.find(voice => voice.lang === 'en-IN');
 }
 
 populateVoiceList();
