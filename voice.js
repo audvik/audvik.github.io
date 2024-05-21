@@ -282,20 +282,19 @@ function spellWord(word) {
         }
         letterUtterance.rate = 1.2;
         speechSynthesis.speak(letterUtterance);
-        utterance.onend = () => {
+        letterUtterance.onend = () => {
           speakAgain(word);
       };
     });
 }
 
-function speakAgain() {
-    const word = flashcards[currentCardIndex].word;
-    const utterance = new SpeechSynthesisUtterance(word);
+function speakAgain(word) {
+    const utterances = new SpeechSynthesisUtterance(word);
     const selectedVoiceIndex = voiceSelect.value;
     if (selectedVoiceIndex !== '') {
-        utterance.voice = voices[selectedVoiceIndex];
+        utterances.voice = voices[selectedVoiceIndex];
     }
-    speechSynthesis.speak(utterance);
+    speechSynthesis.speak(utterances);
 }
 
 // Show the first card on initial load
