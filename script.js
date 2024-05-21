@@ -1,5 +1,4 @@
 const flashcards = [
-    [
   { "id": "1", "word": "Antique", "meaning": "Very old and often valuable." },
   { "id": "2", "word": "Anxiety", "meaning": "Worry or fear about something." },
   { "id": "3", "word": "Approve", "meaning": "Agree with or accept." },
@@ -220,8 +219,6 @@ const flashcards = [
   { "id": "218", "word": "Zenith", "meaning": "The highest point." },
   { "id": "219", "word": "Zodiac", "meaning": "A circle of twelve divisions representing the paths of the planets." },
   { "id": "220", "word": "Zoology", "meaning": "The study of animals." }
-]
-
 ];
 
 let currentCardIndex = 0;
