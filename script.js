@@ -272,11 +272,13 @@ function spellWord(word) {
             letterUtterance.voice = hiINVoice;
         }
         letterUtterance.rate = 1.5;
+        if (index === letters.length - 1) {
+            letterUtterance.onend = () => {
+                speakAgain(word);
+            };
+        }
         speechSynthesis.speak(letterUtterance);
     });
-    letterUtterance.onend = () => {
-        speakAgain(word);
-      };
 }
 
 function speakAgain(word) {
@@ -286,6 +288,7 @@ function speakAgain(word) {
     }
     speechSynthesis.speak(utterances);
 }
+
 
 // Show the first card on initial load
 document.addEventListener('DOMContentLoaded', () => {
