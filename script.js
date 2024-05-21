@@ -273,10 +273,10 @@ function spellWord(word) {
         }
         letterUtterance.rate = 1.5;
         speechSynthesis.speak(letterUtterance);
-        letterUtterance.onend = () => {
+    });
+    letterUtterance.onend = () => {
         speakAgain(word);
       };
-    });
 }
 
 function speakAgain(word) {
