@@ -282,10 +282,10 @@ function spellWord(word) {
         }
         letterUtterance.rate = 1.2;
         speechSynthesis.speak(letterUtterance);
-        letterUtterance.onend = () => {
-          speakAgain(word);
-      };
     });
+    letterUtterance.onend = () => {
+            speakAgain(word);
+        };
 }
 
 function speakAgain(word) {
