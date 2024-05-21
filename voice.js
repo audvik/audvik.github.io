@@ -222,15 +222,23 @@ const flashcards = [
 ];
 
 let currentCardIndex = 0;
-let hiINVoice = null;
+let voices = [];
+const voiceSelect = document.getElementById('voiceSelect');
 
 function populateVoiceList() {
     if (typeof speechSynthesis === 'undefined') {
         return;
     }
     
-    const voices = speechSynthesis.getVoices();
-    hiINVoice = voices.find(voice => voice.lang === 'en-IN');
+    voices = speechSynthesis.getVoices();
+    voiceSelect.innerHTML = '';
+
+    voices.forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.textContent = `${voice.name} (${voice.lang})`;
+        option.value = index;
+        voiceSelect.appendChild(option);
+    });
 }
 
 populateVoiceList();
@@ -241,7 +249,6 @@ if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !=
 
 function showCard(index) {
     const card = flashcards[index];
-    document.getElementById('id').innerText = card.id;
     document.getElementById('word').innerText = card.word;
     document.getElementById('meaning').innerText = card.meaning;
 }
@@ -254,8 +261,9 @@ function nextCard() {
 function speakWord() {
     const word = flashcards[currentCardIndex].word;
     const utterance = new SpeechSynthesisUtterance(word);
-    if (hiINVoice) {
-        utterance.voice = hiINVoice;
+    const selectedVoiceIndex = voiceSelect.value;
+    if (selectedVoiceIndex !== '') {
+        utterance.voice = voices[selectedVoiceIndex];
     }
     speechSynthesis.speak(utterance);
 
@@ -268,12 +276,26 @@ function spellWord(word) {
     const letters = word.split('');
     letters.forEach((letter, index) => {
         const letterUtterance = new SpeechSynthesisUtterance(letter);
-        if (hiINVoice) {
-            letterUtterance.voice = hiINVoice;
+        const selectedVoiceIndex = voiceSelect.value;
+        if (selectedVoiceIndex !== '') {
+            letterUtterance.voice = voices[selectedVoiceIndex];
         }
-        letterUtterance.rate = 1.5;
+        letterUtterance.rate = 1.2;
         speechSynthesis.speak(letterUtterance);
+        utterance.onend = () => {
+          speakAgain(word);
+      };
     });
+}
+
+function speakAgain() {
+    const word = flashcards[currentCardIndex].word;
+    const utterance = new SpeechSynthesisUtterance(word);
+    const selectedVoiceIndex = voiceSelect.value;
+    if (selectedVoiceIndex !== '') {
+        utterance.voice = voices[selectedVoiceIndex];
+    }
+    speechSynthesis.speak(utterance);
 }
 
 // Show the first card on initial load
