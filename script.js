@@ -260,11 +260,11 @@ function speakWord() {
     speechSynthesis.speak(utterance);
 
     utterance.onend = () => {
-        spellWord(word);
+        spellWord(word, utterance);
     };
 }
 
-function spellWord(word) {
+function spellWord(word, utterance) {
     const letters = word.split('');
     letters.forEach((letter, index) => {
         const letterUtterance = new SpeechSynthesisUtterance(letter);
@@ -273,20 +273,8 @@ function spellWord(word) {
         }
         letterUtterance.rate = 1.5;
         speechSynthesis.speak(letterUtterance);
-        utterance.onend = () => {
-          speakAgain(word);
-      };
+        speechSynthesis.speak(utterance);
     });
-}
-
-function speakAgain() {
-    const word = flashcards[currentCardIndex].word;
-    const utterance = new SpeechSynthesisUtterance(word);
-    if (hiINVoice) {
-        utterance.voice = hiINVoice;
-    }
-    speechSynthesis.speak(utterance);
-    };
 }
 
 // Show the first card on initial load
